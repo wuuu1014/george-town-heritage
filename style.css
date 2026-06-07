@@ -1,0 +1,531 @@
+/* =========================
+   George Town Heritage Map
+   Full PC CSS Version
+========================= */
+
+/* 全局设置 */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100%;
+
+    font-family: "Noto Serif SC", "Songti SC", SimSun, serif;
+    color: #203b35;
+
+    background-image:
+        linear-gradient(
+            rgba(238, 248, 239, 0.55),
+            rgba(238, 248, 239, 0.55)
+        ),
+        url("./image/111.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* =========================
+   顶部大标题
+========================= */
+
+h1 {
+    margin: 0;
+    padding: 38px 20px;
+    text-align: center;
+
+    font-family: "Cinzel Decorative", "Cinzel", Georgia, serif;
+    font-size: 54px;
+    line-height: 1.15;
+    letter-spacing: 3.2px;
+    font-weight: 700;
+
+    color: #f7e7c5;
+
+    text-shadow:
+        0 3px 5px rgba(0, 0, 0, 0.48),
+        0 0 18px rgba(247, 231, 197, 0.22);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(25, 59, 57, 0.97),
+            rgba(56, 92, 78, 0.95),
+            rgba(113, 85, 48, 0.93)
+        );
+
+    border-bottom: 6px double rgba(213, 179, 106, 0.95);
+
+    box-shadow:
+        0 8px 26px rgba(0, 0, 0, 0.34),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.18);
+}
+
+/* =========================
+   主体左右布局
+========================= */
+
+.project-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 28px 20px 36px 20px;
+
+    display: flex;
+    gap: 34px;
+    align-items: flex-start;
+}
+
+/* 左侧文字区域 */
+.narrative-section {
+    flex: 1;
+    max-height: 80vh;
+    overflow-y: auto;
+
+    padding: 12px 18px 12px 12px;
+    text-align: justify;
+
+    background-color: rgba(255, 252, 244, 0.38);
+    border-radius: 14px;
+}
+
+/* 右侧地图区域 */
+.map-section {
+    flex: 1;
+}
+
+/* =========================
+   小标题与正文
+========================= */
+
+h2,
+h3 {
+    font-family: "Cinzel", Georgia, serif !important;
+    font-size: 23px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    line-height: 1.35;
+
+    color: #244d4b !important;
+
+    border-left: 5px solid #b99452;
+    border-bottom: 1px solid rgba(36, 77, 75, 0.25);
+
+    padding-left: 12px;
+    padding-bottom: 8px;
+
+    margin-top: 26px;
+    margin-bottom: 16px;
+}
+
+.narrative-section h2:first-child {
+    margin-top: 0;
+}
+
+/* 正文段落：中国风古典字体，字号加大 */
+p,
+.narrative-section p {
+    font-family: "Noto Serif SC", "Songti SC", SimSun, serif !important;
+    font-size: 16px !important;
+    line-height: 1.9 !important;
+    color: #203b35 !important;
+    letter-spacing: 0.3px;
+    text-align: justify;
+}
+
+/* =========================
+   地图区域
+========================= */
+
+#map {
+    width: 100%;
+    height: 80vh;
+
+    border-radius: 18px;
+    border: 5px solid rgba(255, 255, 255, 0.95);
+
+    box-shadow:
+        0 14px 34px rgba(0, 0, 0, 0.32),
+        0 0 0 1px rgba(36, 77, 75, 0.18);
+
+    overflow: hidden;
+}
+
+/* =========================
+   Leaflet 弹窗：旧纸张风格
+========================= */
+
+.leaflet-popup-content-wrapper {
+    background:
+        linear-gradient(
+            rgba(255, 248, 232, 0.94),
+            rgba(245, 231, 199, 0.94)
+        ) !important;
+
+    border-radius: 16px;
+    border: 2px solid rgba(185, 148, 82, 0.72);
+
+    box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.30),
+        inset 0 0 22px rgba(185, 148, 82, 0.16);
+}
+
+.leaflet-popup-content {
+    margin: 14px;
+    background-color: transparent;
+}
+
+/* 强制修改弹窗字体 */
+.leaflet-popup-content,
+.leaflet-popup-content div,
+.leaflet-popup-content h3,
+.leaflet-popup-content p,
+.leaflet-popup-content span,
+.leaflet-popup-content a {
+    font-family: "Noto Serif SC", "Songti SC", SimSun, serif !important;
+}
+
+/* 弹窗标题 */
+.leaflet-popup-content h3 {
+    font-family: "Cinzel", Georgia, serif !important;
+    letter-spacing: 0.8px;
+    color: #244d4b !important;
+}
+
+/* 弹窗小三角 */
+.leaflet-popup-tip {
+    background-color: #f5e7c7 !important;
+    border: 1px solid rgba(185, 148, 82, 0.45);
+}
+
+/* 弹窗图片 */
+.leaflet-popup-content img {
+    border-radius: 8px !important;
+    border: 1px solid rgba(185, 148, 82, 0.55);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18) !important;
+}
+
+/* 弹窗链接 */
+.leaflet-popup-content a {
+    color: #2a6f76 !important;
+    font-weight: 700;
+    text-decoration: none !important;
+}
+
+.leaflet-popup-content a:hover {
+    color: #b36b1f !important;
+    text-decoration: underline !important;
+}
+
+/* Leaflet 缩放按钮 */
+.leaflet-control-zoom {
+    border: none !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+}
+
+.leaflet-control-zoom a {
+    color: #244d4b !important;
+    font-weight: bold;
+}
+
+/* 右下角 OpenStreetMap attribution */
+.leaflet-control-attribution {
+    font-size: 11px;
+    background-color: rgba(255, 250, 242, 0.85) !important;
+    color: #244d4b !important;
+}
+
+/* =========================
+   Group Engagement 区域：333.jpg 背景图
+========================= */
+
+.engagement-container {
+    max-width: 1200px;
+    margin: 30px auto 46px auto;
+    padding: 28px;
+
+    background-image:
+        linear-gradient(
+            rgba(255, 250, 240, 0.86),
+            rgba(238, 246, 233, 0.86)
+        ),
+        url("./image/333.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    border-radius: 18px;
+    border: 2px solid rgba(185, 148, 82, 0.55);
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.18),
+        inset 0 0 24px rgba(185, 148, 82, 0.14);
+}
+
+.tool-title {
+    margin-top: 0;
+    margin-bottom: 12px;
+
+    font-family: "Cinzel", Georgia, serif !important;
+    font-size: 24px;
+    letter-spacing: 1px;
+
+    color: #244d4b !important;
+
+    border-left: 5px solid #b99452;
+    border-bottom: 1px solid rgba(36, 77, 75, 0.25);
+
+    padding-left: 12px;
+    padding-bottom: 10px;
+}
+
+.engagement-intro {
+    font-family: "Noto Serif SC", "Songti SC", SimSun, serif !important;
+    color: #3c4f49 !important;
+    font-size: 14px !important;
+    margin: 0;
+}
+
+/* 成员按钮布局 */
+.member-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin: 22px 0;
+}
+
+.member-btn {
+    padding: 13px 14px;
+
+    background-color: rgba(255, 252, 242, 0.76);
+    color: #33433f;
+
+    border: 1px solid rgba(185, 148, 82, 0.55);
+    border-radius: 10px;
+
+    cursor: pointer;
+    text-align: left;
+
+    font-family: "Noto Serif SC", "Songti SC", SimSun, serif;
+    font-size: 13px;
+    font-weight: 700;
+
+    transition: all 0.2s ease;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    backdrop-filter: blur(2px);
+}
+
+.member-btn:hover {
+    background-color: rgba(239, 221, 181, 0.78);
+    border-color: #b99452;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.member-btn.active {
+    background-color: rgba(36, 77, 75, 0.16);
+    color: #244d4b;
+    border-color: #244d4b;
+    box-shadow: 0 0 0 3px rgba(185, 148, 82, 0.28);
+}
+
+.student-id {
+    font-size: 11px;
+    color: #6d7d78;
+    font-weight: normal;
+}
+
+/* 信息面板：同样加入 333.jpg 背景 */
+.display-panel {
+    padding: 22px;
+
+    background-image:
+        linear-gradient(
+            rgba(255, 250, 235, 0.90),
+            rgba(238, 246, 233, 0.90)
+        ),
+        url("./image/333.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    border-radius: 12px;
+    border-left: 5px solid #b99452;
+    border-top: 1px solid rgba(185, 148, 82, 0.42);
+    border-right: 1px solid rgba(185, 148, 82, 0.42);
+    border-bottom: 1px solid rgba(185, 148, 82, 0.42);
+
+    min-height: 120px;
+
+    box-shadow:
+        inset 0 0 18px rgba(185, 148, 82, 0.12),
+        0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.panel-placeholder {
+    text-align: center;
+    color: #788882;
+    padding: 22px 0;
+
+    font-family: "Noto Serif SC", "Songti SC", SimSun, serif;
+    font-style: italic;
+    font-size: 14px;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 14px;
+    gap: 12px;
+}
+
+.panel-name {
+    font-size: 16px;
+    color: #24332f;
+}
+
+.panel-id {
+    font-size: 12px;
+    color: #6d7d78;
+    font-weight: normal;
+}
+
+.role-badge {
+    background-color: #244d4b;
+    color: #fff4df;
+
+    padding: 4px 11px;
+    border-radius: 20px;
+
+    font-family: "Cinzel", Georgia, serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.panel-desc {
+    margin: 0 0 10px 0;
+    font-size: 14px !important;
+    color: #33433f !important;
+    line-height: 1.65 !important;
+}
+
+.panel-source {
+    margin: 0 0 12px 0;
+    padding: 10px;
+
+    font-size: 13.5px !important;
+    color: #244d4b !important;
+    line-height: 1.6 !important;
+
+    background-color: rgba(255, 246, 224, 0.72);
+    border: 1px solid rgba(185, 148, 82, 0.25);
+    border-radius: 8px;
+}
+
+.progress-info {
+    margin-top: 12px;
+
+    display: flex;
+    justify-content: space-between;
+
+    font-size: 12px;
+    color: #33433f;
+    font-weight: 700;
+}
+
+.status-completed {
+    color: #2f7d58;
+}
+
+/* 进度条 */
+.progress-bar-bg {
+    background-color: rgba(36, 77, 75, 0.18);
+    border-radius: 10px;
+
+    height: 12px;
+    width: 100%;
+
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    background: linear-gradient(
+        90deg,
+        #b99452,
+        #244d4b
+    );
+
+    height: 100%;
+    border-radius: 10px;
+
+    transition: width 0.5s ease;
+}
+
+/* =========================
+   滚动条美化
+========================= */
+
+.narrative-section::-webkit-scrollbar {
+    width: 10px;
+}
+
+.narrative-section::-webkit-scrollbar-track {
+    background: rgba(255, 250, 242, 0.42);
+    border-radius: 10px;
+}
+
+.narrative-section::-webkit-scrollbar-thumb {
+    background: rgba(36, 77, 75, 0.55);
+    border-radius: 10px;
+}
+
+.narrative-section::-webkit-scrollbar-thumb:hover {
+    background: rgba(36, 77, 75, 0.75);
+}
+/* 强制修改 Group Engagement 区域背景 */
+.engagement-container {
+    background-image:
+        linear-gradient(
+            rgba(255, 250, 240, 0.55),
+            rgba(238, 246, 233, 0.55)
+        ),
+        url("./image/333.jpg") !important;
+
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+
+    background-color: transparent !important;
+}
+
+/* 强制修改下方显示面板背景 */
+.display-panel {
+    background-image:
+        linear-gradient(
+            rgba(255, 250, 235, 0.55),
+            rgba(238, 246, 233, 0.55)
+        ),
+        url("./image/333.jpg") !important;
+
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+
+    background-color: transparent !important;
+}

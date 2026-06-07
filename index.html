@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>George Town Heritage Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* Responsive Split Screen Layout for Digital Humanities Projects */
+        .project-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            gap: 30px;
+            box-sizing: border-box;
+        }
+        .narrative-section {
+            flex: 1;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding-right: 15px;
+            text-align: justify;
+        }
+        .map-section {
+            flex: 1;
+        }
+        h1 {
+            text-align: center;
+            padding: 20px 10px;
+            background-color: #f8f9fa;
+            margin: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: #2c3e50;
+            border-bottom: 3px solid #007bc4;
+        }
+        h2 {
+            color: #007bc4;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-top: 25px;
+            font-size: 20px;
+            font-family: Arial, sans-serif;
+        }
+        p {
+            line-height: 1.6;
+            color: #444;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+        
+        /* 📊 Group Engagement Tool Styling */
+        .engagement-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 25px;
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e1e8ed;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        .tool-title {
+            color: #2c3e50;
+            margin-top: 0;
+            font-size: 22px;
+            border-bottom: 2px solid #e1e8ed;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .member-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .member-btn {
+            padding: 12px 15px;
+            background: #f8f9fa;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            text-align: left;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .member-btn:hover {
+            background: #f1f5f9;
+            border-color: #007bc4;
+            transform: translateY(-2px);
+        }
+        .member-btn.active {
+            background: #e0f2fe;
+            color: #0369a1;
+            border-color: #0369a1;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.4);
+        }
+        .student-id {
+            font-size: 11px;
+            color: #64748b;
+            font-weight: normal;
+        }
+        .display-panel {
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border-left: 5px solid #007bc4;
+            min-height: 120px;
+            transition: all 0.3s ease;
+        }
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .role-badge {
+            background: #007bc4;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .progress-bar-bg {
+            background: #e2e8f0;
+            border-radius: 10px;
+            height: 12px;
+            width: 100%;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #3b82f6, #007bc4);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Mobile optimization */
+        @media (max-width: 900px) {
+            .project-container {
+                flex-direction: column;
+            }
+            .narrative-section {
+                max-height: none;
+                overflow-y: visible;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Mapping Living Heritage in George Town</h1>
+
+<div class="project-container">
+    
+    <div class="narrative-section">
+        <h2>1. Research Purpose & Questions</h2>
+        <p>
+            George Town is well known for its rich cultural heritage and multicultural history. 
+            This project explores a selection of heritage landmarks across George Town and other parts of Penang 
+            to better understand how different communities, historical events, and cultural traditions have 
+            shaped the island over time.
+        </p>
+        <p>
+            The project focuses on two core research questions. The first question looks at where these 
+            heritage sites are located and whether there are any visible spatial patterns. The second question 
+            explores the stories and meanings associated with these places based on information collected from 
+            official heritage sources and community narratives.
+        </p>
+
+        <h2>2. Methodology & Process</h2>
+        <p>
+            To answer these questions, our group collected information on a range of heritage sites, 
+            including religious buildings, clan houses, colonial landmarks, museums, historic streets, 
+            and traditional settlements. Each of the 25 selected sites was categorized and mapped using 
+            its precise geographic coordinates. 
+        </p>
+        <p>
+            We systematically reviewed the historical background of each location and compared the 
+            different themes that appeared across the dataset. We also conducted strict QA verification 
+            to ensure copyright compliance for all visual assets and data source integrity before implementing 
+            the interactive mapping interface.
+        </p>
+
+        <h2>3. Key Findings & Spatial Analysis</h2>
+        <p>
+            From the map, it is clear that many important heritage sites are concentrated within George Town’s 
+            historic core. Locations such as Fort Cornwallis, Kapitan Keling Mosque, Khoo Kongsi, Armenian Street, 
+            St. George’s Church, and the Goddess of Mercy Temple are located close to one another. 
+            This concentration reflects the historical importance of the city centre as a place of trade, 
+            administration, religion, and migration.
+        </p>
+        <p>
+            The analysis also shows that Penang’s heritage extends beyond the UNESCO World Heritage area. 
+            Sites such as Batu Ferringhi Fishing Village, Balik Pulau Heritage Town, Snake Temple, and Suffolk House 
+            demonstrate that important cultural and historical landscapes can also be found in coastal and rural areas. 
+            These places help tell a broader story about everyday life, local communities, and economic activities 
+            throughout Penang’s history.
+        </p>
+        <p>
+            One of the strongest themes identified in the dataset is multiculturalism. The selected sites 
+            represent Malay, Chinese, Indian, Burmese, Thai, and European influences, highlighting the diverse 
+            communities that contributed to the development of George Town. Other common themes include 
+            migration, religion, trade, community identity, and colonial history.
+        </p>
+        <p>
+            Overall, the findings suggest that heritage in Penang is more than a collection of historic buildings. 
+            The sites are connected through shared stories of cultural exchange, settlement, and community development. 
+            By combining mapping and narrative analysis, this project provides a better understanding of how heritage 
+            is distributed across space and how different groups have contributed to the identity of George Town and Penang.
+        </p>
+    </div>
+    
+    <div class="map-section">
+        <div id="map"></div>
+    </div>
+
+</div>
+
+<div class="engagement-container">
+    <h3 class="tool-title">📊 Interactive Group Engagement & Project Source Tracker</h3>
+    <p style="color: #64748b; font-size: 13px; margin: 0;">Click on a team member to dynamically view their specific roles, project sources, and milestone tracking updates:</p>
+    
+    <div class="member-grid">
+        <button class="member-btn" onclick="trackEngagement(this, 'member1')">
+            <span>Hao Xinru (Role 1)</span>
+            <span class="student-id">ID: 25054820</span>
+        </button>
+        <button class="member-btn" onclick="trackEngagement(this, 'member2')">
+            <span>Hu Lei (Role 2)</span>
+            <span class="student-id">ID: 23110851</span>
+        </button>
+        <button class="member-btn" onclick="trackEngagement(this, 'member3')">
+            <span>Zhou Jiajie (Role 3)</span>
+            <span class="student-id">ID: 25061305</span>
+        </button>
+        <button class="member-btn" onclick="trackEngagement(this, 'member4')">
+            <span>Geng Ruiyu (Role 4)</span>
+            <span class="student-id">ID: 24060197</span>
+        </button>
+        <button class="member-btn" onclick="trackEngagement(this, 'member5')">
+            <span>Wu Xueying (Role 5)</span>
+            <span class="student-id">ID: 24219832</span>
+        </button>
+    </div>
+    
+    <div id="engagement-panel" class="display-panel">
+        <div style="text-align: center; color: #94a3b8; padding: 20px 0; font-style: italic; font-size: 14px;">
+            Select a team member above to fetch verified timeline tasks, contribution weight metrics, and digital archive data logs.
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="script.js"></script>
+
+<script>
+function trackEngagement(btnElement, memberKey) {
+    // Toggle active styles on clicked buttons
+    var buttons = document.getElementsByClassName('member-btn');
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove('active');
+    }
+    btnElement.classList.add('active');
+
+    // Data structure fully aligned with original image descriptions (Strict Order 1-5)
+    var engagementData = {
+        member1: {
+            name: "Hao Xinru",
+            id: "25054820",
+            role: "Content Creator & Text Compiler",
+            status: "100% Completed",
+            pct: "20%",
+            desc: "Responsible for writing and drafting the core descriptive text content for the heritage sites. Compiled textual background summaries to support the qualitative analysis of George Town's historic environments.",
+            source: "Content derived from preliminary text drafts and initial group research notes."
+        },
+        member2: {
+            name: "Hu Lei",
+            id: "23110851",
+            role: "Data Collector",
+            status: "100% Completed",
+            pct: "20%",
+            desc: "Responsible for core dataset gathering and information aggregation. Harvested historical site features, compiled reference links, and collected spatial coordinate points for the target mapping landmarks.",
+            source: "Sourced from public digital catalogs and geospatial web indices."
+        },
+        member3: {
+            name: "Zhou Jiajie",
+            id: "25061305",
+            role: "Data Cleaner & QA Controller",
+            status: "100% Completed",
+            pct: "20%",
+            desc: "Solely responsible for technical data cleaning, syntax error correction, and strict code quality control. Debugged structural web file issues, resolved character encoding problems to eliminate text corruption, and audited visual asset paths.",
+            source: "Codebase data matrices cleaned and audited from open web source structures."
+        },
+        member4: {
+            name: "Geng Ruiyu",
+            id: "24060197",
+            role: "Data Visualizer & Frontend Developer",
+            status: "100% Completed",
+            pct: "20%",
+            desc: "Responsible for programming the geospatial interactive map visualization and managing frontend website engineering. Implemented the LeafletJS map rendering logic, customized responsive multi-column layout modules, and designed user interface components.",
+            source: "Built via Leaflet API, web DOM scripting, and responsive CSS formatting structures."
+        },
+        member5: {
+            name: "Wu Xueying",
+            id: "24219832",
+            role: "Timeline Coordinator & Content Synthesizer",
+            status: "100% Completed",
+            pct: "20%",
+            desc: "Responsible for comprehensive group schedule synchronization, project milestone tracking, and task timeline management. Authored the synthesis of the final academic narrative, analyzing regional history, spatial clustering, and cross-referenced project data sources.",
+            source: "Project tracking records and research frameworks compiled from institutional documentation and heritage reference criteria."
+        }
+    };
+
+    var target = engagementData[memberKey];
+    var panel = document.getElementById('engagement-panel');
+    
+    // Inject dynamic HTML structure
+    panel.innerHTML = 
+        '<div class="panel-header">' +
+            '<strong style="font-size: 16px; color: #1e293b;">' + target.name + ' <span style="font-size:12px; color:#64748b; font-weight:normal;">(Student ID: ' + target.id + ')</span></strong>' +
+            '<span class="role-badge">' + target.role + '</span>' +
+        '</div>' +
+        '<p style="margin: 0 0 10px 0; font-size: 13.5px; color: #334155; line-height:1.5;"><b>Role & Deliverables:</b> ' + target.desc + '</p>' +
+        '<p style="margin: 0 0 12px 0; font-size: 13px; color: #0369a1; background: #f0f9ff; padding: 8px; border-radius: 6px; line-height:1.4;"><b>Data & Project Sources:</b> ' + target.source + '</p>' +
+        '<div style="font-size: 12px; color: #475569; font-weight: 600; display:flex; justify-content:space-between; margin-top:10px;">' +
+            '<span>Timeline Tracking Progress: <span style="color:#10b981;">' + target.status + '</span></span>' +
+            '<span>Project Contribution Weight: ' + target.pct + '</span>' +
+        '</div>' +
+        '<div class="progress-bar-bg">' +
+            '<div class="progress-bar-fill" style="width: ' + target.pct + ';"></div>' +
+        '</div>';
+}
+</script>
+
+</body>
+</html>
