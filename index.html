@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>George Town Heritage Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* 导航栏专属样式 */
+       .navbar { 
+            height: 60px; 
+            background: #a3c9a8; 
+            color: #1c3d27; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 0 20px; 
+            box-shadow: 0 2px 8px rgba(28, 61, 39, 0.08); 
+            position: relative;
+            z-index: 1000; 
+            border-bottom: 2px solid #8cb892; 
+        }
+        .navbar-brand { font-weight: bold; font-size: 18px; color: #1c3d27; letter-spacing: 0.5px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+        .navbar-links a { color: rgba(28, 61, 39, 0.8); text-decoration: none; margin-left: 25px; font-weight: 600; font-size: 15px; padding-bottom: 4px; transition: all 0.2s ease; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+        .navbar-links a:hover, .navbar-links a.active { color: #1c3d27; border-bottom: 3px solid #1c3d27; }
+
+        .project-container { max-width: 1200px; margin: 0 auto; padding: 20px; display: flex; gap: 30px; box-sizing: border-box; }
+        .narrative-section { flex: 1; max-height: 80vh; overflow-y: auto; padding-right: 15px; text-align: justify; }
+        .map-section { flex: 1; }
+        h1 { text-align: center; padding: 20px 10px; background-color: #f8f9fa; margin: 0; font-family: 'Helvetica Neue', Arial, sans-serif; color: #2c3e50; border-bottom: 3px solid #007bc4; }
+        h2 { color: #007bc4; border-bottom: 1px solid #ddd; padding-bottom: 5px; margin-top: 25px; font-size: 20px; font-family: Arial, sans-serif; }
+        p { line-height: 1.6; color: #444; font-size: 14px; font-family: Arial, sans-serif; }
+        @media (max-width: 900px) { .project-container { flex-direction: column; } .narrative-section { max-height: none; overflow-y: visible; } }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="navbar-brand">🇲🇾 Mapping Living Heritage in George Town</div>
+    <div class="navbar-links">
+        <a href="index.html">🗺️ Interactive Heritage Map</a>
+        <a href="story.html">📖 Cultural Narrative</a> 
+        <a href="datasets.html">📊 Open Dataset</a>
+    </div>
+</nav>
+
+<h1> Interactive Heritage Map</h1>
+
+<div class="project-container">
+    
+    <div class="narrative-section">
+        <h2>1. Research Purpose & Questions</h2>
+        <p>
+            George Town is well known for its rich cultural heritage and multicultural history. 
+            This project explores a selection of heritage landmarks across George Town and other parts of Penang 
+            to better understand how different communities, historical events, and cultural traditions have 
+            shaped the island over time.
+        </p>
+        <p>
+            The project focuses on two core research questions. The first question looks at where these 
+            heritage sites are located and whether there are any visible spatial patterns. The second question 
+            explores the stories and meanings associated with these places based on information collected from 
+            official heritage sources and community narratives.
+        </p>
+
+        <h2>2. Methodology & Process</h2>
+        <p>
+            To answer these questions, our group collected information on a range of heritage sites, 
+            including religious buildings, clan houses, colonial landmarks, museums, historic streets, 
+            and traditional settlements. Each of the 25 selected sites was categorized and mapped using 
+            its precise geographic coordinates. 
+        </p>
+        <p>
+            We systematically reviewed the historical background of each location and compared the 
+            different themes that appeared across the dataset. We also conducted strict QA verification 
+            to ensure copyright compliance for all visual assets and data source integrity before implementing 
+            the interactive mapping interface.
+        </p>
+
+        <h2>3. Key Findings & Spatial Analysis</h2>
+        <p>
+            From the map, it is clear that many important heritage sites are concentrated within George Town’s 
+            historic core. Locations such as Fort Cornwallis, Kapitan Keling Mosque, Khoo Kongsi, Armenian Street, 
+            St. George’s Church, and the Goddess of Mercy Temple are located close to one another. 
+            This concentration reflects the historical importance of the city centre as a place of trade, 
+            administration, religion, and migration.
+        </p>
+        <p>
+            The analysis also shows that Penang’s heritage extends beyond the UNESCO World Heritage area. 
+            Sites such as Batu Ferringhi Fishing Village, Balik Pulau Heritage Town, Snake Temple, and Suffolk House 
+            demonstrate that important cultural and historical landscapes can also be found in coastal and rural areas. 
+            These places help tell a broader story about everyday life, local communities, and economic activities 
+            throughout Penang’s history.
+        </p>
+        <p>
+            One of the strongest themes identified in the dataset is multiculturalism. The selected sites 
+            represent Malay, Chinese, Indian, Burmese, Thai, and European influences, highlighting the diverse 
+            communities that contributed to the development of George Town. Other common themes include 
+            migration, religion, trade, community identity, and colonial history.
+        </p>
+        <p>
+            Overall, the findings suggest that heritage in Penang is more than a collection of historic buildings. 
+            The sites are connected through shared stories of cultural exchange, settlement, and community development. 
+            By combining mapping and narrative analysis, this project provides a better understanding of how heritage 
+            is distributed across space and how different groups have contributed to the identity of George Town and Penang.
+        </p>
+    </div>
+    
+    <div class="map-section">
+        <div id="map"></div>
+    </div>
+
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
