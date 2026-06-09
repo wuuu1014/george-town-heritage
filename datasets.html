@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Open Dataset - George Town Spatial Platform</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* ========================================================================= */
+        /* 🎨 Global Vintage Background: Inherited from platform specifications */
+        /* ========================================================================= */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body { 
+            font-family: "Noto Serif SC", "Songti SC", SimSun, serif; 
+            color: #203b35; 
+            
+            /* Parallax 111.jpg texture with pale green overlay */
+            background-image:
+                linear-gradient(
+                    rgba(238, 248, 239, 0.55),
+                    rgba(238, 248, 239, 0.55)
+                ),
+                url("./image/111.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        /* 🎨 Unified Cultural Green Navigation Bar */
+        .navbar { 
+            height: 60px; 
+            background: #a3c9a8; 
+            color: #1c3d27; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 0 20px; 
+            box-shadow: 0 2px 8px rgba(28, 61, 39, 0.08); 
+            position: relative;
+            z-index: 1000; 
+            border-bottom: 2px solid #8cb892; 
+        }
+        .navbar-brand { font-weight: bold; font-size: 18px; color: #1c3d27; letter-spacing: 0.5px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+        .navbar-links a { color: rgba(28, 61, 39, 0.8); text-decoration: none; margin-left: 25px; font-weight: 600; font-size: 15px; padding-bottom: 4px; transition: all 0.2s ease; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+        .navbar-links a:hover, .navbar-links a.active { color: #1c3d27; border-bottom: 3px solid #1c3d27; }
+
+        /* Portal Banner Header */
+        .portal-header-box { 
+            max-width: 1240px; 
+            margin: 35px auto 15px auto; 
+            padding: 30px; 
+            background: rgba(255, 252, 244, 0.65); 
+            border-radius: 12px; 
+            text-align: center; 
+            border: 1px solid rgba(36, 77, 75, 0.15);
+            backdrop-filter: blur(1px);
+        }
+        .portal-header-box h1 { margin: 0 0 10px 0; font-family: Garamond, Georgia, serif; color: #244d4b; font-size: 26px; font-weight: bold; }
+        .portal-header-box p { color: #203b35; font-size: 14px; max-width: 780px; margin: 0 auto; line-height: 1.6; text-align: justify; }
+
+        /* ========================================================================= */
+        /* 📊 Open Dataset Repository Cards Layer */
+        /* ========================================================================= */
+        .repository-section { 
+            max-width: 1240px; 
+            margin: 25px auto; 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); 
+            gap: 30px; 
+            padding: 0 20px; 
+            box-sizing: border-box; 
+        }
+        .repo-card { 
+            background: rgba(255, 252, 244, 0.85); 
+            border: 1px solid rgba(36, 77, 75, 0.18); 
+            border-radius: 12px; 
+            padding: 24px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02); 
+            transition: all 0.2s ease; 
+        }
+        .repo-card:hover { 
+            transform: translateY(-4px); 
+            box-shadow: 0 10px 20px rgba(36, 77, 75, 0.08); 
+            border-color: #b99452; 
+        }
+        .repo-card h2 { 
+            font-size: 17px; 
+            color: #244d4b; 
+            margin-top: 0; 
+            margin-bottom: 18px; 
+            padding-bottom: 8px; 
+            border-bottom: 2px solid #b99452; 
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .repo-card p.repo-desc {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        .repo-card ul { list-style: none; padding: 0; margin: 0; }
+        .repo-card li { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 12px 0; 
+            border-bottom: 1px solid rgba(36, 77, 75, 0.12); 
+            font-size: 13.5px; 
+            color: #203b35; 
+        }
+        .repo-card li:last-child { border-bottom: none; }
+        .repo-card li span { font-weight: 500; font-family: 'Courier New', Courier, monospace; color: #244d4b; }
+        .repo-card li a { 
+            background: rgba(163, 201, 168, 0.2); 
+            color: #1c3d27; 
+            text-decoration: none; 
+            padding: 6px 14px; 
+            border-radius: 6px; 
+            font-weight: bold; 
+            font-size: 12px; 
+            transition: all 0.2s ease; 
+            border: 1px solid rgba(36, 77, 75, 0.3); 
+            font-family: -apple-system, sans-serif;
+        }
+        .repo-card li a:hover { 
+            background: #244d4b; 
+            color: #f7e7c5; 
+            border-color: #244d4b; 
+        }
+
+        /* Engagement Framework Styling Synchronization */
+        .engagement-container { max-width: 1240px; margin: 50px auto 60px auto; padding: 30px; background: rgba(255, 252, 244, 0.85); border-radius: 12px; border: 1px solid rgba(185, 148, 82, 0.3); box-shadow: 0 4px 20px rgba(185, 148, 82, 0.05); font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+        .tool-title { color: #244d4b; margin-top: 0; font-size: 20px; border-bottom: 2px solid rgba(36, 77, 75, 0.15); padding-bottom: 12px; display: flex; align-items: center; gap: 10px; font-family: Garamond, Georgia, serif; font-weight: bold; }
+        .member-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin: 25px 0; }
+        .member-btn { padding: 14px 18px; background: rgba(255, 255, 255, 0.7); color: #203b35; border: 1px solid rgba(36, 77, 75, 0.25); border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13.5px; text-align: left; transition: all 0.2s ease; display: flex; flex-direction: column; gap: 5px; }
+        .member-btn:hover { background: rgba(255, 255, 255, 0.95); border-color: #b99452; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.04); }
+        .member-btn.active { background: #244d4b; color: #f7e7c5; border-color: #244d4b; box-shadow: 0 4px 10px rgba(36, 77, 75, 0.2); }
+        .member-btn.active .student-id { color: rgba(247, 231, 197, 0.8); }
+        .student-id { font-size: 11px; color: #64748b; font-weight: normal; }
+        
+        .display-panel { padding: 25px; background: rgba(253, 250, 242, 0.95); border-radius: 8px; border-left: 6px solid #b99452; border-top: 1px solid rgba(185, 148, 82, 0.2); border-right: 1px solid rgba(185, 148, 82, 0.2); border-bottom: 1px solid rgba(185, 148, 82, 0.2); min-height: 140px; }
+        .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
+        .role-badge { background: #244d4b; color: #f7e7c5; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
+        .progress-bar-bg { background: rgba(36, 77, 75, 0.1); border-radius: 10px; height: 10px; width: 100%; margin-top: 10px; overflow: hidden; }
+        .progress-bar-fill { background: linear-gradient(90deg, #b99452, #244d4b); height: 100%; border-radius: 10px; transition: width 0.5s ease; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="navbar-brand">🇲🇾 Mapping Living Heritage in George Town</div>
+    <div class="navbar-links">
+        <a href="index.html">🗺️ Interactive Heritage Map</a>
+        <a href="story.html">📖 Cultural Narrative</a> 
+        <a href="datasets.html" class="active">📊 Open Dataset</a>
+    </div>
+</nav>
+
+<div class="portal-header-box">
+    <h1>📊 Open Geodatabase Portal</h1>
+    <p>
+        Welcome to the central research data repository. This specialized dashboard provides open-access data assets, standardized geospatial layers, and complete indexing documentation utilized for mapping and auditing living heritage across the historic environments of George Town and the wider Penang region.
+    </p>
+</div>
+
+<section class="repository-section">
+
+    <div class="repo-card">
+        <h2>📦 1. Heritage Sites Dataset</h2>
+        <p class="repo-desc">Contains the comprehensive spatial registry of 25 selected regional heritage nodes, featuring precise WGS84 coordinates, historical typologies, and descriptive profiles.</p>
+        <ul>
+            <li>
+                <span>[Excel] heritage_sites.xlsx</span>
+                <a href="1/heritage_sites.xlsx" download>Download</a>
+            </li>
+            <li>
+                <span>[GeoJSON] heritage_sites.geojson</span>
+                <a href="1/heritage_sites.geojson" download>Download</a>
+            </li>
+            <li>
+                <span>[CSV] heritage_sites.csv</span>
+                <a href="1/heritage_sites.csv" download>Download</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="repo-card">
+        <h2>🗺️ 2. Curated Trails Dataset</h2>
+        <p class="repo-desc">Structured linear paths and sequence indicators defining Route A (Traditional Craftsmanship Corridor) and Route B (Multicultural Coexistence Trail).</p>
+        <ul>
+            <li>
+                <span>[Excel] Route_A_Artisan_Trail.xlsx</span>
+                <a href="2/Route_A_Artisan_Trail.xlsx" download>Download</a>
+            </li>
+            <li>
+                <span>[Excel] Route_B_Harmony_Trail.xlsx</span>
+                <a href="2/Route_B_Harmony_Trail.xlsx" download>Download</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="repo-card">
+        <h2>📜 3. Metadata Documentation</h2>
+        <p class="repo-desc">Formal field definitions, attribute schemas, coordinate reference values, and copyright guidelines ensuring absolute data traceability and reproducibility.</p>
+        <ul>
+            <li>
+                <span>[Excel] field_definitions.xls</span>
+                <a href="3/field_definitions.xls" download>Download</a>
+            </li>
+            <li>
+                <span>[Word] metadata_guide.docx</span>
+                <a href="3/metadata_guide.docx" download>Download</a>
+            </li>
+            <li>
+                <span>[GeoJSON] coordinates.geojson</span>
+                <a href="3/coordinates.geojson" download>Download</a>
+            </li>
+        </ul>
+    </div>
+
+</section>
+
+<div class="engagement-container">
+    <h3 class="tool-title">📊 Interactive Group Engagement & Research Source Tracker</h3>
+    <p style="color: #64748b; font-size: 13.5px; margin: 0;">Click on any research team member below to dynamically audit their targeted project roles, academic database sources, and milestone tracking registries:</p>
+    
+    <div class="member-grid">
+        <button class="member-btn" onclick="trackEngagement(this, 'member1')">
+            <span>Hao Xinru (Role 1)</span>
+            <span class="student-id">ID: 25054820</span>
+        </button>
+        <button class="member-btn" onclick="trackEngagement(this, 'member2')">
+            <span>Hu Lei (Role 2)</span>
+            <span class="student-id">ID: 23110851</span>
+        </button>
+        <button class="member-btn" onclick="trackEngagement(this, 'member3')">
+            <span>Zhou Jiajie (Role 3)</span>
+            <span class="student-id">ID: 25061305</span>
+        </button>
+        <button class="member-btn" onclick="trackEngagement(this, 'member4')">
+            <span>Geng Ruiyu (Role 4)</span>
+            <span class="student-id">ID: 24060197</span>
+        </button>
+        <button class="member-btn" onclick="trackEngagement(this, 'member5')">
+            <span>Wu Xueying (Role 5)</span>
+            <span class="student-id">ID: 24219832</span>
+        </button>
+    </div>
+    
+    <div id="engagement-panel" class="display-panel">
+        <div style="text-align: center; color: #94a3b8; padding: 25px 0; font-style: italic; font-size: 14px;">
+            Select an active team member above to retrieve verified timeline logs, individual contribution weight metrics, and digital archive data origins.
+        </div>
+    </div>
+</div>
+
+<script>
+function trackEngagement(btnElement, memberKey) {
+    var buttons = document.getElementsByClassName('member-btn');
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove('active');
+    }
+    btnElement.classList.add('active');
+
+    var engagementData = {
+        member1: {
+            name: "Hao Xinru",
+            id: "25054820",
+            role: "Academic Content Curator & Textual Compiler",
+            status: "100% Fully Completed",
+            pct: "20%",
+            desc: "Responsible for drafting and synthesizing the core descriptive text content for the mapped heritage nodes. Compiled historical background profiles, contextualized urban landscape records, and structured qualitative text matrices to support spatial thematic analysis.",
+            source: "Derived from multi-faith institutional records, open-access historical archives, and preliminary group research dossiers."
+        },
+        member2: {
+            name: "Hu Lei",
+            id: "23110851",
+            role: "Geospatial Data Harvester & Field Aggregator",
+            status: "100% Fully Completed",
+            pct: "20%",
+            desc: "Led the primary dataset gathering and structural information extraction pipelines. Accountable for auditing historical site typologies, compiling external reference indexes, and extracting precise WGS84 geographic coordinate vectors for the target mapping landmarks.",
+            source: "Sourced from public digital catalogs, official state spatial indices, and global geospatial gazetteers."
+        },
+        member3: {
+            name: "Zhou Jiajie",
+            id: "25061305",
+            role: "Database Sanitizer & Technical QA Auditor",
+            status: "100% Fully Completed",
+            pct: "20%",
+            desc: "Solely responsible for technical dataset cleaning, syntax normalization, and strict front-end architectural quality control. Cleaned data formats, fixed character encoding bugs to prevent text corruption, and audited visual asset paths and hyperlink pathways.",
+            source: "Web data structures and database arrays audited against W3C standards and open-source platform criteria."
+        },
+        member4: {
+            name: "Geng Ruiyu",
+            id: "24060197",
+            role: "Geospatial Visualizer & Frontend Engineer",
+            status: "100% Fully Completed",
+            pct: "20%",
+            desc: "Engineered the interactive geospatial map visualization layer and managed responsive web platform development. Programmed LeafletJS runtime display scripts, styled custom multi-column grid interfaces, and designed interactive pop-up components for optimized desktop and mobile layouts.",
+            source: "Developed via Leaflet API extensions, asynchronous JavaScript DOM scripts, and fluid layout styling frameworks."
+        },
+        member5: {
+            name: "Wu Xueying",
+            id: "24219832",
+            role: "Milestone Coordinator & Analytical Synthesizer",
+            status: "100% Fully Completed",
+            pct: "20%",
+            desc: "Directed the comprehensive research workflow, synchronized cross-functional timelines, and oversaw milestone tracking. Authored the final academic synthesis, establishing the cross-referenced study framework that evaluates spatial clustering and regional history lines.",
+            source: "Project logs and qualitative synthesis matrices built upon GTWHI (George Town World Heritage Incorporated) research criteria."
+        }
+    };
+
+    var target = engagementData[memberKey];
+    var panel = document.getElementById('engagement-panel');
+    
+    panel.innerHTML = 
+        '<div class="panel-header">' +
+            '<strong style="font-size: 16px; color: #244d4b;">' + target.name + ' <span style="font-size:12px; color:#64748b; font-weight:normal; font-family:-apple-system,sans-serif;">(Student ID: ' + target.id + ')</span></strong>' +
+            '<span class="role-badge">' + target.role + '</span>' +
+        '</div>' +
+        '<p style="margin: 0 0 12px 0; font-size: 13.5px; color: #203b35; line-height:1.6;"><b>Targeted Role & Deliverables:</b> ' + target.desc + '</p>' +
+        '<p style="margin: 0 0 14px 0; font-size: 13px; color: #244d4b; background: rgba(163,201,168,0.25); border: 1px solid rgba(36,77,75,0.15); padding: 10px; border-radius: 6px; line-height:1.5;"><b>Data & Project Sources:</b> ' + target.source + '</p>' +
+        '<div style="font-size: 12px; color: #203b35; font-weight: 600; display:flex; justify-content:space-between; margin-top:10px; font-family:-apple-system,sans-serif;">' +
+            '<span>Timeline Tracking Progress: <span style="color:#10b981;">' + target.status + '</span></span>' +
+            '<span>Project Contribution Weight: ' + target.pct + '</span>' +
+        '</div>' +
+        '<div class="progress-bar-bg">' +
+            '<div class="progress-bar-fill" style="width: ' + target.pct + ';"></div>' +
+        '</div>';
+}
+</script>
+
+</body>
+</html>
