@@ -1,0 +1,380 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1,
+        "name": "Fort Cornwallis",
+        "category": "Colonial Heritage"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.3441,
+          5.4215
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 2,
+        "name": "Leong San Tong Khoo Kongsi",
+        "category": "Clan / Community Heritage"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.3372,
+          5.4147
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 3,
+        "name": "Kapitan Keling Mosque",
+        "category": "Religious Heritage"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.3364,
+          5.4167
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 4,
+        "name": "Cheong Fatt Tze Mansion",
+        "category": "Domestic / Elite Residence Heritage"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.3341,
+          5.4221
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5,
+        "name": "Armenian Street",
+        "category": "Urban Streetscape"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.3379,
+          5.4145
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 6,
+        "name": "Pinang Peranakan Mansion",
+        "category": "Museum / Cultural Institution"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.3411,
+          5.4179
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 7,
+        "name": "St. George’s Church",
+        "category": "Religious Heritage"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.3391,
+          5.4212
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 8,
+        "name": "Goddess of Mercy Temple",
+        "category": "Religious Heritage"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.3382,
+          5.4181
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 9,
+        "name": "Sri Mahamariamman Temple",
+        "category": "Religious Heritage"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.3361,
+          5.4152
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 10,
+        "name": "Acheen Street Mosque",
+        "category": "Religious Heritage"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.3369,
+          5.4138
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 11,
+        "name": "Clan Jetties of Penang",
+        "category": "Maritime / Waterfront Heritage"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.3399,
+          5.4121
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 12,
+        "name": "Suffolk House",
+        "category": "Colonial Residential Heritage"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.3061,
+          5.4103
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 13,
+        "name": "Sun Yat Sen Museum",
+        "category": "Museum / Political Heritage"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.3375,
+          5.4144
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 14,
+        "name": "Penang State Museum and Art Gallery",
+        "category": "Museum / Cultural Institution"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.3397,
+          5.4204
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 15,
+        "name": "Dhammikarama Burmese Temple",
+        "category": "Religious Heritage"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.3086,
+          5.4312
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 16,
+        "name": "Wat Chaiya Mangalaram",
+        "category": "Religious Heritage"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.3079,
+          5.4315
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 17,
+        "name": "Penang City Hall",
+        "category": "Colonial Civic Heritage"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.3413,
+          5.4218
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 18,
+        "name": "Penang Town Hall",
+        "category": "Colonial Civic Heritage"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.3418,
+          5.4215
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 19,
+        "name": "Han Jiang Ancestral Temple",
+        "category": "Clan / Community Heritage"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.3374,
+          5.4161
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 20,
+        "name": "Khoo Kongsi Cannon Square",
+        "category": "Urban Public Space"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.3371,
+          5.4144
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 21,
+        "name": "Penang Islamic Museum",
+        "category": "Museum / Cultural Institution"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.3359,
+          5.4142
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 22,
+        "name": "Nagore Square",
+        "category": "Urban Streetscape"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.3263,
+          5.4213
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 23,
+        "name": "Batu Ferringhi Fishing Village",
+        "category": "Coastal / Everyday Heritage"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.2482,
+          5.4745
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 24,
+        "name": "Balik Pulau Heritage Town",
+        "category": "Rural / Agrarian Heritage"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.2361,
+          5.3512
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 25,
+        "name": "Snake Temple",
+        "category": "Religious Heritage"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.2853,
+          5.3142
+        ]
+      }
+    }
+  ]
+}
