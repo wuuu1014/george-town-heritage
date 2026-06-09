@@ -89,6 +89,13 @@
         .route-intro-box { background: rgba(255, 255, 255, 0.65); border-left: 4px solid #244d4b; padding: 15px; margin-bottom: 25px; border-radius: 0 8px 8px 0; border-top: 1px solid rgba(36, 77, 75, 0.1); border-right: 1px solid rgba(36, 77, 75, 0.1); border-bottom: 1px solid rgba(36, 77, 75, 0.1); }
         .route-intro-box p { margin: 0; font-size: 13.5px; color: #203b35; line-height: 1.6; text-align: justify; }
 
+        /* 💡 核心空间发现学术成果框样式 */
+        .findings-box { background: rgba(253, 250, 242, 0.9); border: 1.5px solid #b99452; border-left: 6px solid #b99452; padding: 18px; margin-top: 30px; margin-bottom: 25px; border-radius: 6px; box-shadow: 0 4px 10px rgba(185, 148, 82, 0.08); }
+        .findings-box h4 { margin: 0 0 12px 0; color: #244d4b; font-size: 15px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid rgba(185, 148, 82, 0.3); padding-bottom: 6px; }
+        .findings-box ul { margin: 0; padding-left: 18px; font-size: 13px; color: #203b35; line-height: 1.6; }
+        .findings-box li { margin-bottom: 10px; text-align: justify; }
+        .findings-box li:last-child { margin-bottom: 0; }
+
         /* 故事记录卡片卡槽 design */
         .story-card { background: rgba(255, 252, 244, 0.85); border: 1px solid rgba(36, 77, 75, 0.2); border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02); transition: all 0.2s; cursor: pointer; }
         .story-card:hover { border-color: #b99452; background: rgba(255, 255, 255, 0.95); transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(36, 77, 75, 0.08); }
@@ -141,7 +148,7 @@
 <body>
 
     <nav class="navbar">
-        <div class="navbar-brand">🇲🇾 Mapping Living Heritage in George Town</div>
+        <div class="navbar-brand">🇲🇾 George Town Living Heritage Spatial Platform</div>
         <div class="navbar-links">
             <a href="index.html">🗺️ Interactive Heritage Map</a>
             <a href="story.html" class="active">📖 Cultural Narrative</a>
@@ -158,6 +165,7 @@
                 <button class="tab-btn" onclick="switchRoute('B')">📍 Route B: Cultural Diversity</button>
             </div>
 
+            <!-- Route A -->
             <div id="routeA-section" class="route-content active">
                 <h2 class="route-title">Route A: Traditional Craftsmanship Corridor</h2>
                 
@@ -197,6 +205,15 @@
                     <p>Operating inside the historic enclave, this shop highlights the Muslim community's traditional hat-making craft (Songkok). Serving generations of locals, it represents multi-ethnic heritage coexistence along the historic streets.</p>
                 </div>
 
+                <!-- 📊 Route A English Key Spatial Findings Box -->
+                <div class="findings-box">
+                    <h4>🔍 Key Spatial Findings</h4>
+                    <ul>
+                        <li><b>Spatial Agglomeration:</b> Traditional craftsmanship industries (e.g., traditional joss stick making, Songkok hat making) exhibit a high geographic dependency on core religious landmarks (such as the Kuan Yin Temple and local Mosques), establishing a classic "faith-business" symbiotic spatial pattern.</li>
+                        <li><b>Spatial Vulnerability:</b> Spatial data reveals that specific craftsmanship trades have drifted into "Declining" or "Memory Site" statuses (e.g., the ironworks street on Toh Aka Lane). This spatial fragmentation across the traditional artisan corridor is accelerated by the loss of senior master artisans and rising rental premiums under rapid urban gentrification.</li>
+                    </ul>
+                </div>
+
                 <div class="media-box">
                     <h4>🎙️ Oral History & Documentary Multimedia Element</h4>
                     <p style="font-size: 12.5px; color: #244d4b; margin: 0 0 10px 0;">Watch the non-material cultural heritage documentary on George Town trade preservation below.</p>
@@ -204,6 +221,7 @@
                 </div>
             </div>
 
+            <!-- Route B -->
             <div id="routeB-section" class="route-content">
                 <h2 class="route-title">Route B: Cultural & Religious Diversity</h2>
                 
@@ -241,6 +259,14 @@
                     <div style="font-size: 12px; color: #7f8c8d; margin-bottom: 8px;"><b>Est. Year:</b> 1818 / 1819 | <b>Category:</b> Religious Heritage / Anglican Church</div>
                     <img src="https://www.smi-holdings.jp/wp-content/uploads/2019/11/4448fdf3ebe7191ea1c23f2967c70ed2.jpg" alt="St. George Church">
                     <p>St. George’s Church is a nineteenth-century Anglican church in George Town and is widely recognised as one of the oldest Anglican churches in Southeast Asia. Its Georgian-style architecture and colonial history add a Christian and British colonial narrative to the town.</p>
+                </div>
+
+                <!-- 📊 Route B English Key Spatial Findings Box -->
+                <div class="findings-box">
+                    <h4>🔍 Key Spatial Findings</h4>
+                    <ul>
+                        <li><b>The "Street of Harmony" Phenomenon:</b> The Goddess of Mercy Chinese Temple (1800), Kapitan Keling Mosque (1801), Sri Mahamariamman Hindu Temple (1833), and St. George’s Anglican Church (1818) coexist in an exceptionally high-density cluster within a radius of less than 1 kilometer. From a spatial geography perspective, this validates George Town's unique "Multicultural Multi-core Coexistence Model", serving as an exemplary spatial projection of diverse Maritime Silk Road diaspora integration within a historic port city.</li>
+                    </ul>
                 </div>
 
                 <div class="media-box" style="background: rgba(255, 255, 255, 0.75); border: 1px dashed #244d4b;">
