@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cultural Narrative - George Town Heritage</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        /* ========================================================================= */
+        /* 🎨 全局古风背景：完美承接 style.css 规范 */
+        /* ========================================================================= */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body { 
+            font-family: "Noto Serif SC", "Songti SC", SimSun, serif; 
+            color: #203b35; 
+            
+            /* 🎯 引入 111.jpg 纹理与淡绿叠加层，采用 fixed 确保全局底层不动 */
+            background-image:
+                linear-gradient(
+                    rgba(238, 248, 239, 0.55),
+                    rgba(238, 248, 239, 0.55)
+                ),
+                url("./image/111.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            overflow: hidden; 
+        }
+        
+        /* 🎨 统一的文化墨绿导航栏样式 */
+        .navbar { 
+            height: 60px; 
+            background: #a3c9a8; 
+            color: #1c3d27; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 0 20px; 
+            box-shadow: 0 2px 8px rgba(28, 61, 39, 0.08); 
+            position: relative;
+            z-index: 1000; 
+            border-bottom: 2px solid #8cb892; 
+        }
+        .navbar-brand { font-weight: bold; font-size: 18px; color: #1c3d27; letter-spacing: 0.5px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+        .navbar-links a { color: rgba(28, 61, 39, 0.8); text-decoration: none; margin-left: 25px; font-weight: 600; font-size: 15px; padding-bottom: 4px; transition: all 0.2s ease; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+        .navbar-links a:hover, .navbar-links a.active { color: #1c3d27; border-bottom: 3px solid #1c3d27; }
+
+        /* 布局框架分布 */
+        .story-container { display: flex; height: calc(100vh - 60px); width: 100%; position: relative; }
+        
+        /* 🖼️ 左侧故事滚动面板 */
+        .narrative-scroll { 
+            width: 40%; 
+            height: 100%; 
+            overflow-y: auto; 
+            box-sizing: border-box; 
+            padding: 30px; 
+            border-right: 1px solid rgba(36, 77, 75, 0.15); 
+            position: relative;
+            z-index: 10;
+            background-color: rgba(255, 250, 242, 0.42) !important; 
+            backdrop-filter: blur(1px);
+            -webkit-backdrop-filter: blur(1px);
+        }
+        
+        /* 右侧地图容器 */
+        .map-section { width: 60%; height: 100%; position: relative; z-index: 1; }
+        #map { width: 100%; height: 100%; background: transparent !important; }
+
+        /* ========================================================================= */
+        /* 📊 交互组件美化 */
+        /* ========================================================================= */
+        .tab-container { display: flex; gap: 10px; margin-bottom: 25px; border-bottom: 2px solid rgba(36, 77, 75, 0.2); padding-bottom: 12px; }
+        .tab-btn { flex: 1; padding: 12px; border: 1px solid rgba(36, 77, 75, 0.3); background: rgba(255, 252, 244, 0.7); border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 14px; color: #203b35; font-family: inherit; transition: all 0.2s; text-align: center; }
+        .tab-btn:hover { background: rgba(255, 255, 255, 0.9); border-color: #244d4b; }
+        .tab-btn.active { background: #244d4b; color: #f7e7c5; border-color: #244d4b; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+
+        .route-content { display: none; }
+        .route-content.active { display: block; }
+        .route-title { color: #244d4b; border-left: 5px solid #b99452; padding-left: 10px; margin-bottom: 15px; margin-top: 5px; font-weight: bold; }
+        
+        /* 导言学术框 */
+        .route-intro-box { background: rgba(255, 255, 255, 0.65); border-left: 4px solid #244d4b; padding: 15px; margin-bottom: 25px; border-radius: 0 8px 8px 0; border-top: 1px solid rgba(36, 77, 75, 0.1); border-right: 1px solid rgba(36, 77, 75, 0.1); border-bottom: 1px solid rgba(36, 77, 75, 0.1); }
+        .route-intro-box p { margin: 0; font-size: 13.5px; color: #203b35; line-height: 1.6; text-align: justify; }
+
+        /* 故事记录卡片卡槽 design */
+        .story-card { background: rgba(255, 252, 244, 0.85); border: 1px solid rgba(36, 77, 75, 0.2); border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02); transition: all 0.2s; cursor: pointer; }
+        .story-card:hover { border-color: #b99452; background: rgba(255, 255, 255, 0.95); transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(36, 77, 75, 0.08); }
+        .story-card h3 { margin-top: 0; color: #244d4b; font-size: 17px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        .story-card h3 span { font-size: 11px; background: #fef3c7; color: #d97706; padding: 3px 8px; border-radius: 12px; font-weight: normal; font-family: -apple-system, sans-serif; }
+        .story-card img { width: 100%; height: 190px; object-fit: cover; border-radius: 8px; margin: 12px 0; border: 1px solid rgba(36, 77, 75, 0.15); }
+        .story-card p { font-size: 14px; color: #203b35; line-height: 1.6; text-align: justify; margin-bottom: 0; }
+        
+        /* 多媒体浮动盒 */
+        .media-box { background: rgba(238, 246, 233, 0.85); border: 1px dashed #244d4b; border-radius: 8px; padding: 15px; margin-top: 20px; }
+        .media-box h4 { margin: 0 0 10px 0; color: #244d4b; font-size: 14px; font-weight: bold; }
+
+        /* 滚动条样式统一美化 */
+        .narrative-scroll::-webkit-scrollbar { width: 10px; }
+        .narrative-scroll::-webkit-scrollbar-track { background: rgba(255, 250, 242, 0.42); border-radius: 10px; }
+        .narrative-scroll::-webkit-scrollbar-thumb { background: rgba(36, 77, 75, 0.55); border-radius: 10px; }
+        .narrative-scroll::-webkit-scrollbar-thumb:hover { background: rgba(36, 77, 75, 0.75); }
+
+        /* ========================================================================= */
+        /* 🛠️ 深度强制重写 Leaflet 气泡框 */
+        /* ========================================================================= */
+        .leaflet-popup.custom-popup .leaflet-popup-content-wrapper {
+            background-color: #fdfaf2 !important; 
+            border: 2px solid #e6d3b3 !important; 
+            border-radius: 14px !important; 
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15) !important;
+            padding: 2px !important;
+        }
+        .leaflet-popup.custom-popup .leaflet-popup-content {
+            margin: 10px 12px !important;
+            width: 260px !important; 
+        }
+        .leaflet-popup.custom-popup .leaflet-popup-tip {
+            background-color: #fdfaf2 !important;
+            border-left: 2px solid #e6d3b3 !important;
+            border-bottom: 2px solid #e6d3b3 !important;
+            box-shadow: none !important;
+        }
+
+        /* 弹出层古典化 */
+        .popup-card-container { display: flex; flex-direction: column; gap: 6px; font-family: Garamond, Georgia, serif; }
+        .popup-img { width: 100%; height: 130px; object-fit: cover; border-radius: 6px; display: block; margin-bottom: 4px; }
+        .popup-title { font-size: 15px; font-weight: bold; color: #244d4b; margin: 2px 0; font-family: inherit; border-bottom: 1.5px solid #e6d3b3; padding-bottom: 4px; }
+        .popup-meta { font-size: 10.5px; color: #e67e22; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px; font-family: -apple-system, sans-serif; }
+        .popup-desc { font-size: 12px; color: #203b35; line-height: 1.4; text-align: justify; margin: 0; }
+        .popup-link { font-size: 11px; color: #b99452; text-align: right; font-weight: bold; text-decoration: none; margin-top: 2px; font-family: -apple-system, sans-serif; }
+        .popup-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-brand">🇲🇾 George Town Living Heritage Spatial Platform</div>
+        <div class="navbar-links">
+            <a href="index.html">🗺️ Interactive Heritage Map</a>
+            <a href="story.html" class="active">📖 Cultural Narrative</a>
+            <a href="datasets.html">📊 Open Dataset</a>
+        </div>
+    </nav>
+
+    <div class="story-container">
+        
+        <div class="narrative-scroll">
+            
+            <div class="tab-container">
+                <button class="tab-btn active" onclick="switchRoute('A')">📍 Route A: Craftsmanship</button>
+                <button class="tab-btn" onclick="switchRoute('B')">📍 Route B: Cultural Diversity</button>
+            </div>
+
+            <div id="routeA-section" class="route-content active">
+                <h2 class="route-title">Route A: Traditional Craftsmanship Corridor</h2>
+                
+                <div class="route-intro-box">
+                    <p>
+                        <b>Route Overview:</b> This module explores the geographic distribution and cultural significance of endangered traditional craftsmanship in George Town. By examining the living heritage sites, this linear spatial corridor visualizes how multi-ethnic artisan workshops coexist within the historic urban landscape and highlights the pressing challenges of cultural transmission in a changing modern society.
+                    </p>
+                </div>
+
+                <p style="color: #244d4b; font-size: 12px; margin-bottom: 25px; font-style: italic;">💡 <i>Tip: Click any heritage card below to dynamically focus the spatial map directly on the artisan site.</i></p>
+
+                <div class="story-card" onclick="flyToLocation(0)">
+                    <h3>1. Penang Heritage Joss Stick Maker <br><span style="font-size:13px; color:#555; background:none; padding:0;">李明泉手工制香</span> <span>Active / Declining</span></h3>
+                    <div style="font-size: 12px; color: #7f8c8d; margin-bottom: 8px;"><b>Est. Year:</b> c. 1948 | <b>Category:</b> Traditional Craft / Joss Stick Making</div>
+                    <img src="https://gtwhi.com.my/wp-content/uploads/2021/06/IMG_20200903_090433-scaled.jpg" alt="Joss Stick Maker">
+                    <p>Founded by the late Lee Beng Chuan around 1948, this workshop continues George Town’s handmade joss stick tradition near the Goddess of Mercy Temple. After Lee passed away in 2020, his son Lee Chin Poh inherited the craft and continues the business.</p>
+                </div>
+
+                <div class="story-card" onclick="flyToLocation(1)">
+                    <h3>2. Hong Kong Shoe Store <br><span style="font-size:13px; color:#555; background:none; padding:0;">香港鞋店</span> <span>Active / Declining</span></h3>
+                    <div style="font-size: 12px; color: #7f8c8d; margin-bottom: 8px;"><b>Est. Year:</b> c. 1958 | <b>Category:</b> Traditional Craft / Handmade Shoemaking</div>
+                    <img src="https://shihyenshoes.wordpress.com/wp-content/uploads/2013/02/100_2228.jpg" alt="Hong Kong Shoe Store">
+                    <p>Established by Wong Sung Choy around 1958, Hong Kong Shoe Store is known for handmade and custom-made shoes, including Baba Nyonya beaded shoes, dance shoes, prosthetic shoes and other special designs. It represents George Town’s small-scale urban craftsmanship.</p>
+                </div>
+
+                <div class="story-card" onclick="flyToLocation(2)">
+                    <h3>3. Ironsmith Sculpture & Memory Site <br><span style="font-size:13px; color:#555; background:none; padding:0;">打铁匠雕塑 / 打铁街记忆点</span> <span>Memory Site</span></h3>
+                    <div style="font-size: 12px; color: #7f8c8d; margin-bottom: 8px;"><b>Est. Year:</b> Unknown | <b>Category:</b> Traditional Trade Memory / Ironworks</div>
+                    <img src="https://tse3.mm.bing.net/th/id/OIP.45Q-JlICAj_TRAFxLyUSGwHaE7?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Ironsmith Memory">
+                    <p>This stop uses the Ironsmith steel-rod sculpture as a memory point for George Town’s former ironworks trade. The sculpture marks Toh Aka Lane, once locally remembered as an “ironworks street” associated with ironsmiths and working-class urban craft.</p>
+                </div>
+
+                <div class="story-card" onclick="flyToLocation(3)">
+                    <h3>4. Kedai Songkok OSM Mohd Shariff <br><span style="font-size:13px; color:#555; background:none; padding:0;">OSM Mohd Shariff 宋谷帽制作铺</span> <span>Active</span></h3>
+                    <div style="font-size: 12px; color: #7f8c8d; margin-bottom: 8px;"><b>Est. Year:</b> 1936 | <b>Category:</b> Traditional Craft / Songkok Making</div>
+                    <img src="https://gtwhi.com.my/wp-content/uploads/2022/04/Header-830x622.jpg" alt="Songkok Making">
+                    <p>Operating inside the historic enclave, this shop highlights the Muslim community's traditional hat-making craft (Songkok). Serving generations of locals, it represents multi-ethnic heritage coexistence along the historic streets.</p>
+                </div>
+
+                <div class="media-box">
+                    <h4>🎙️ Oral History & Documentary Multimedia Element</h4>
+                    <p style="font-size: 12.5px; color: #244d4b; margin: 0 0 10px 0;">Watch the non-material cultural heritage documentary on George Town trade preservation below.</p>
+                    <iframe width="100%" height="180" src="https://www.youtube.com/embed/mzL_kgSFgKU" style="border-radius:6px; border:none;"></iframe>
+                </div>
+            </div>
+
+            <div id="routeB-section" class="route-content">
+                <h2 class="route-title">Route B: Cultural & Religious Diversity</h2>
+                
+                <div class="route-intro-box">
+                    <p>
+                        <b>Route Overview:</b> This module maps the spatial concentration of diverse architectural landmarks representing harmonious coexistence of multicultural communities in Penang. It highlights how religious sites form historical nodes of cultural identity, illustrating multi-ethnic adaptation within the regional geography.
+                    </p>
+                </div>
+
+                <p style="color: #244d4b; font-size: 12px; margin-bottom: 25px; font-style: italic;">💡 <i>Tip: Click any heritage card below to dynamically focus the spatial map directly on the landmark.</i></p>
+
+                <div class="story-card" onclick="flyToLocation(0)">
+                    <h3>1. Goddess of Mercy Temple <br><span style="font-size:13px; color:#555; background:none; padding:0;">广东观音亭 / 观音亭</span> <span>Active Religious Site</span></h3>
+                    <div style="font-size: 12px; color: #7f8c8d; margin-bottom: 8px;"><b>Est. Year:</b> 1800 | <b>Category:</b> Religious Heritage / Chinese Temple</div>
+                    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Goddess_Of_Mercy_Temple_1.jpg" alt="Goddess of Mercy">
+                    <p>The Goddess of Mercy Temple, also known as Kuan Yin Teng, is one of the oldest Chinese temples in Penang. Located on Jalan Masjid Kapitan Keling, it represents Chinese religious practice and remains an active worship space in George Town’s multicultural heritage core.</p>
+                </div>
+
+                <div class="story-card" onclick="flyToLocation(1)">
+                    <h3>2. Kapitan Keling Mosque <br><span style="font-size:13px; color:#555; background:none; padding:0;">吉宁甲必丹清真寺</span> <span>Active Religious Site</span></h3>
+                    <div style="font-size: 12px; color: #7f8c8d; margin-bottom: 8px;"><b>Est. Year:</b> 1801 | <b>Category:</b> Religious Heritage / South Indian Muslim Mosque</div>
+                    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Kapitan_Keling_Mosque%2C_Georgetown%2C_Penang%2C_Malaysia.JPG" alt="Kapitan Keling Mosque">
+                    <p>Kapitan Keling Mosque was built by South Indian Muslim traders in the early nineteenth century. Located near other major religious landmarks, it reflects the Tamil Muslim community’s role in George Town’s trading history and the city’s long tradition of religious coexistence.</p>
+                </div>
+
+                <div class="story-card" onclick="flyToLocation(2)">
+                    <h3>3. Sri Mahamariamman Temple <br><span style="font-size:13px; color:#555; background:none; padding:0;">马哈马里安曼印度庙</span> <span>Active Religious Site</span></h3>
+                    <div style="font-size: 12px; color: #7f8c8d; margin-bottom: 8px;"><b>Est. Year:</b> 1833 | <b>Category:</b> Religious Heritage / Hindu Temple</div>
+                    <img src="https://c8.alamy.com/comp/PTTKJ2/sri-mahamariamman-temple-kuala-lumpur-malaysia-PTTKJ2.jpg" alt="Sri Mahamariamman Temple">
+                    <p>Sri Mahamariamman Temple is the oldest Hindu temple in Penang. Located in Little India, it is closely connected with the South Indian Tamil community and is known for its colourful Dravidian-style entrance tower and continuing role in Hindu worship and festivals.</p>
+                </div>
+
+                <div class="story-card" onclick="flyToLocation(3)">
+                    <h3>4. St. George’s Church <br><span style="font-size:13px; color:#555; background:none; padding:0;">圣乔治教堂</span> <span>Active Religious Site</span></h3>
+                    <div style="font-size: 12px; color: #7f8c8d; margin-bottom: 8px;"><b>Est. Year:</b> 1818 / 1819 | <b>Category:</b> Religious Heritage / Anglican Church</div>
+                    <img src="https://www.smi-holdings.jp/wp-content/uploads/2019/11/4448fdf3ebe7191ea1c23f2967c70ed2.jpg" alt="St. George Church">
+                    <p>St. George’s Church is a nineteenth-century Anglican church in George Town and is widely recognised as one of the oldest Anglican churches in Southeast Asia. Its Georgian-style architecture and colonial history add a Christian and British colonial narrative to the town.</p>
+                </div>
+
+                <div class="media-box" style="background: rgba(255, 255, 255, 0.75); border: 1px dashed #244d4b;">
+                    <h4 style="color: #244d4b;">🎬 Cultural Heritage: George Town Street of Harmony</h4>
+                    <p style="font-size: 12.5px; color: #203b35; margin: 0 0 10px 0;">Watch this official documentary by Penang Harmony Corporation (HARMONICO) exploring the harmonious coexistence of diverse religious communities along the historic street.</p>
+                    <iframe width="100%" height="180" src="https://www.youtube.com/embed/OqNdT6m9w8Q" style="border-radius:6px; border:none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="map-section">
+            <div id="map"></div>
+        </div>
+
+    </div>
+
+    <script>
+        // 1. Initialize Map Object
+        const map = L.map('map', { fadeAnimation: false }).setView([5.4165, 100.337], 15.5);
+
+        // 2. Add Base Map Layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // 3. Complete Extracted Data Matrices (With Precise Requested URL Linkages)
+        const locationsA = [
+            { 
+                name: "Penang Heritage Joss Stick Maker", 
+                coords: [5.418, 100.338],
+                cat: "Traditional Craft / Joss Stick Making",
+                img: "https://gtwhi.com.my/wp-content/uploads/2021/06/IMG_20200903_090433-scaled.jpg",
+                desc: "Founded around 1948, this workshop continues handmade joss stick tradition. Inherited and run by Lee Chin Poh.",
+                url: "https://gtwhi.com.my/penang-heritage-joss-stick-maker/"
+            },
+            { 
+                name: "Hong Kong Shoe Store", 
+                coords: [5.415, 100.3356],
+                cat: "Traditional Craft / Handmade Shoemaking",
+                img: "https://shihyenshoes.wordpress.com/wp-content/uploads/2013/02/100_2228.jpg",
+                desc: "Established around 1958, known for handmade shoes including Baba Nyonya beaded shoes and special custom designs.",
+                url: "https://gtwhi.com.my/hong-kong-shoe-store/"
+            },
+            { 
+                name: "Ironsmith Sculpture / Toh Aka Lane Memory", 
+                coords: [5.41329, 100.33686],
+                cat: "Traditional Trade Memory / Ironworks",
+                img: "https://tse3.mm.bing.net/th/id/OIP.45Q-JlICAj_TRAFxLyUSGwHaE7?rs=1&pid=ImgDetMain&o=7&rm=3",
+                desc: "This steel-rod sculpture stands as a spatial memory point for George Town’s historic working-class ironworks street.",
+                url: "https://www.penang-traveltips.com/ironsmith-sculpture.htm"
+            },
+            { 
+                name: "Kedai Songkok OSM Mohd Shariff", 
+                coords: [5.4164, 100.3379],
+                cat: "Traditional Craft / Songkok Making",
+                img: "https://gtwhi.com.my/wp-content/uploads/2022/04/Header-830x622.jpg",
+                desc: "Operating since 1936 inside the enclave, highlighting Muslim traditional songkok hat-making heritage.",
+                url: "https://gtwhi.com.my/kedai-songkok-osm-mohd-shariff/"
+            }
+        ];
+
+        const locationsB = [
+            { 
+                name: "Goddess of Mercy Temple", 
+                coords: [5.4181, 100.3382],
+                cat: "Religious Heritage / Chinese Temple",
+                img: "https://commons.wikimedia.org/wiki/Special:FilePath/Goddess_Of_Mercy_Temple_1.jpg",
+                desc: "Also known as Kuan Yin Teng, it is one of the oldest Chinese temples in Penang, acting as an active worship core.",
+                url: "https://en.wikipedia.org/wiki/Goddess_of_Mercy_Temple"
+            },
+            { 
+                name: "Kapitan Keling Mosque", 
+                coords: [5.4167, 100.3364],
+                cat: "Religious Heritage / South Indian Muslim Mosque",
+                img: "https://commons.wikimedia.org/wiki/Special:FilePath/Kapitan_Keling_Mosque%2C_Georgetown%2C_Penang%2C_Malaysia.JPG",
+                desc: "Built by South Indian Muslim traders in 1801, reflecting Tamil Muslim maritime trading networks and religious coexistence.",
+                url: "https://en.wikipedia.org/wiki/Kapitan_Keling_Mosque"
+            },
+            { 
+                name: "Sri Mahamariamman Temple", 
+                coords: [5.4152, 100.3361],
+                cat: "Religious Heritage / Hindu Temple",
+                img: "https://c8.alamy.com/comp/PTTKJ2/sri-mahamariamman-temple-kuala-lumpur-malaysia-PTTKJ2.jpg",
+                desc: "The oldest Hindu temple in Penang (1833). Located in Little India, featuring a spectacular Dravidian-style gopuram tower.",
+                url: "https://en.wikipedia.org/wiki/Sri_Mahamariamman_Temple,_Penang"
+            },
+            { 
+                name: "St. George’s Church", 
+                coords: [5.4212, 100.3391],
+                cat: "Religious Heritage / Anglican Church",
+                img: "https://www.smi-holdings.jp/wp-content/uploads/2019/11/4448fdf3ebe7191ea1c23f2967c70ed2.jpg",
+                desc: "Built around 1818, it is one of the oldest Anglican churches in Southeast Asia, showing superb Georgian-style architecture.",
+                url: "https://en.wikipedia.org/wiki/St._George%27s_Church,_Penang"
+            }
+        ];
+
+        let markersA = [];
+        let markersB = [];
+        let activeRoute = 'A';
+
+        const markerLayerA = L.layerGroup().addTo(map);
+        const markerLayerB = L.layerGroup();
+
+        function createPopupContent(item) {
+            return `
+                <div class="popup-card-container">
+                    <img class="popup-img" src="${item.img}" alt="${item.name}">
+                    <div class="popup-meta">${item.cat}</div>
+                    <div class="popup-title">${item.name}</div>
+                    <p class="popup-desc">${item.desc}</p>
+                    <a class="popup-link" href="${item.url}" target="_blank">View Details &rarr;</a>
+                </div>
+            `;
+        }
+
+        // Initialize markers
+        locationsA.forEach((loc, index) => {
+            let marker = L.marker(loc.coords);
+            marker.bindPopup(createPopupContent(loc), { className: 'custom-popup', minWidth: 260, maxWidth: 260 });
+            marker.addTo(markerLayerA);
+            markersA.push(marker);
+        });
+
+        locationsB.forEach((loc, index) => {
+            let marker = L.marker(loc.coords);
+            marker.bindPopup(createPopupContent(loc), { className: 'custom-popup', minWidth: 260, maxWidth: 260 });
+            marker.addTo(markerLayerB);
+            markersB.push(marker);
+        });
+
+        function flyToLocation(index) {
+            let targetMarker = (activeRoute === 'A') ? markersA[index] : markersB[index];
+            let coords = (activeRoute === 'A') ? locationsA[index].coords : locationsB[index].coords;
+            
+            map.flyTo(coords, 17.5, { animate: true, duration: 1.0 });
+            
+            setTimeout(() => {
+                targetMarker.openPopup();
+            }, 350);
+        }
+
+        // Tab Router Switcher
+        function switchRoute(routeType) {
+            if (activeRoute === routeType) return;
+            activeRoute = routeType;
+            
+            const buttons = document.getElementsByClassName('tab-btn');
+            for(let i=0; i<buttons.length; i++) { buttons[i].classList.remove('active'); }
+            event.currentTarget.classList.add('active');
+
+            if(routeType === 'A') {
+                document.getElementById('routeA-section').classList.add('active');
+                document.getElementById('routeB-section').classList.remove('active');
+                map.removeLayer(markerLayerB);
+                markerLayerA.addTo(map);
+                map.closePopup();
+                map.setView([5.4165, 100.337], 15.5); 
+            } else {
+                document.getElementById('routeA-section').classList.remove('active');
+                document.getElementById('routeB-section').classList.add('active');
+                map.removeLayer(markerLayerA);
+                markerLayerB.addTo(map);
+                map.closePopup();
+                map.setView([5.4168, 100.337], 15.5); 
+            }
+        }
+    </script>
+</body>
+</html>
